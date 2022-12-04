@@ -7,7 +7,8 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.0.29", features = ["derive"] }
-serialport = "4.2.0"
+# TODO: switch to a new release
+serialport = { git = "https://github.com/serialport/serialport-rs.git", rev = "9dc140c1f3c98517aa47f3d0730d6b72bdeab3a7" }
 
 [[bin]]
 name = "mux-serial-server"
