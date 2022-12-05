@@ -12,6 +12,14 @@ serde = { version = "1.0.148", features = ["derive"] }
 # TODO: switch to a new release
 serialport = { git = "https://github.com/serialport/serialport-rs.git", rev = "9dc140c1f3c98517aa47f3d0730d6b72bdeab3a7" }
 
+[lib]
+name = "serial_mux"
+path = "src/lib.rs"
+
 [[bin]]
 name = "mux-serial-server"
 path = "src/mux-serial-server.rs"
+
+[[bin]]
+name = "mux-serial-client"
+path = "src/mux-serial-client.rs"
