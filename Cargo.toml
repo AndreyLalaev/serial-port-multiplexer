@@ -5,21 +5,44 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[dependencies]
-bincode = "1.3.3"
-clap = { version = "4.0.29", features = ["derive"] }
-serde = { version = "1.0.148", features = ["derive"] }
-# TODO: switch to a new release
-serialport = { git = "https://github.com/serialport/serialport-rs.git", rev = "9dc140c1f3c98517aa47f3d0730d6b72bdeab3a7" }
-
 [lib]
 name = "serial_mux"
 path = "src/lib.rs"
 
 [[bin]]
 name = "mux-serial-server"
-path = "src/mux-serial-server.rs"
+path = "src/mux_serial_server.rs"
 
 [[bin]]
 name = "mux-serial-client"
-path = "src/mux-serial-client.rs"
+path = "src/mux_serial_client.rs"
+
+[dependencies.bincode]
+version = "1.3.3"
+
+[dependencies.bytes]
+version = "1.3.0"
+
+[dependencies.clap]
+version = "4.0.29"
+features = ["derive"]
+
+[dependencies.futures]
+version = "0.3.25"
+
+[dependencies.serde]
+version = "1.0.148"
+features = ["derive"]
+
+[dependencies.tokio]
+version = "1.23.0"
+features = ["full"]
+
+[dependencies.tokio-serial]
+git = "https://github.com/AndreyLalaev/tokio-serial.git"
+rev = "6ed7de04bf35e88b1d4179232e3295c0416717f8"
+features = ["codec"]
+
+[dependencies.tokio-util]
+version = "0.7.4"
+features = ["codec"]
