@@ -17,6 +17,9 @@ path = "src/mux_serial_server.rs"
 name = "mux-serial-client"
 path = "src/mux_serial_client.rs"
 
+[dependencies.nix]
+version = "0.26.1"
+
 [dependencies.bincode]
 version = "1.3.3"
 
