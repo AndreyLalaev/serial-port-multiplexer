@@ -1,9 +1,12 @@
 use std::io;
 use std::os::unix::prelude::RawFd;
 
-use nix::unistd::{read, write};
+use nix::{
+    errno::Errno,
+    fcntl::{fcntl, FcntlArg::F_GETFL, FcntlArg::F_SETFL, OFlag},
+    unistd::{read, write},
+};
 use tokio::io::unix::{self, AsyncFd};
-use tokio::io::{AsyncRead, AsyncWrite};
 
 pub struct AsyncIOFd {
     inner: unix::AsyncFd<RawFd>,
@@ -11,9 +14,20 @@ pub struct AsyncIOFd {
 
 impl AsyncIOFd {
     pub fn new(fd: RawFd) -> io::Result<Self> {
+        AsyncIOFd::set_non_block(fd)?;
+
         Ok(Self {
             inner: AsyncFd::new(fd)?,
         })
+    }
+
+    fn set_non_block(fd: RawFd) -> Result<(), Errno> {
+        let flags = fcntl(fd, F_GETFL)?;
+        fcntl(
+            fd,
+            F_SETFL(OFlag::from_bits_truncate(flags) | OFlag::O_NONBLOCK),
+        )?;
+        Ok(())
     }
 
     pub async fn read(&self, out: &mut [u8]) -> io::Result<usize> {
